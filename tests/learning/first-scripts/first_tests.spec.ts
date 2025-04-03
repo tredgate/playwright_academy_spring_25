@@ -11,8 +11,5 @@ test("První test", async ({ page }) => {
 });
 
 /*
-Instalace pluginu PW (⌛2:00)
-Zkontrolujte a případně nainstalujte rozšíření:
-Playwright Test for VSCode - microsoft.com
-
+npm install --save-dev eslint @eslint/js typescript typescript-eslint eslint-config-prettier
 */
