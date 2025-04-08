@@ -4,8 +4,10 @@ import { LoginPage } from "./login_page.ts";
 export class DashboardPage {
   readonly profileButton: Locator;
   readonly logoutButton: Locator;
+  private readonly page: Page;
 
-  constructor(public readonly page: Page) {
+  constructor(page: Page) {
+    this.page = page;
     this.profileButton = page.locator("#user_dropdown");
     this.logoutButton = page.locator("#logout");
   }
