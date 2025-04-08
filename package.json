@@ -16,7 +16,15 @@
   "homepage": "https://github.com/tredgate/playwright_academy_spring_25#readme",
   "description": "",
   "devDependencies": {
+    "@eslint/js": "^9.23.0",
     "@playwright/test": "^1.51.1",
-    "@types/node": "^22.13.14"
+    "@types/node": "^22.13.14",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.29.0"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.6.0"
   }
 }
