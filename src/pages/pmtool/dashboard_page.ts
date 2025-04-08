@@ -1,4 +1,5 @@
 import { type Locator, type Page } from "@playwright/test";
+import { LoginPage } from "./login_page.ts";
 
 export class DashboardPage {
   readonly profileButton: Locator;
@@ -9,11 +10,13 @@ export class DashboardPage {
     this.logoutButton = page.locator("#logout");
   }
 
-  async clickProfile() {
+  async clickProfile(): Promise<DashboardPage> {
     await this.profileButton.click();
+    return this;
   }
 
-  async clickLogout() {
+  async clickLogout(): Promise<LoginPage> {
     await this.logoutButton.click();
+    return new LoginPage(this.page);
   }
 }
