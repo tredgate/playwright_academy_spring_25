@@ -24,3 +24,24 @@ export class DashboardPage {
     return new LoginPage(this.page);
   }
 }
+/*
+Vytvořte novou branch: exercise_assisted_pages
+Složka
+src/pages/pmtool/
+Soubor
+projects_page.ts
+Třída
+ProjectsPage
+
+
+Složka
+src/pages/pmtool/projects
+Soubory
+create_new_project_modal.ts
+project_info_page.ts
+Třídy
+CreateNewProjectModal
+ProjectInfoPage
+
+
+*/
