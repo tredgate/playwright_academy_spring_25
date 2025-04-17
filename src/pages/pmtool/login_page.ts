@@ -1,5 +1,9 @@
 import { type Locator, type Page } from "@playwright/test";
+<<<<<<< HEAD
 import { DashboardPage } from "./dashboard_page";
+=======
+import { DashboardPage } from "./dashboard_page.ts";
+>>>>>>> origin/main
 import { LostPasswordPage } from "./lost_password_page.ts";
 
 export class LoginPage {
@@ -9,7 +13,11 @@ export class LoginPage {
   private readonly usernameInput: Locator;
   private readonly passwordInput: Locator;
   private readonly loginButton: Locator;
+<<<<<<< HEAD
   private readonly lostPasswordAnchor: Locator;
+=======
+  private readonly passwordForgottenAnchor: Locator;
+>>>>>>> origin/main
 
   // 2. Constructor v kterém nastavíme jednotlivé lokátory
   constructor(page: Page) {
@@ -17,7 +25,11 @@ export class LoginPage {
     this.usernameInput = page.locator("#username");
     this.passwordInput = page.locator("#password");
     this.loginButton = page.locator(".btn");
+<<<<<<< HEAD
     this.lostPasswordAnchor = page.locator("//a[@id='forget_password']");
+=======
+    this.passwordForgottenAnchor = page.locator("#forget_password");
+>>>>>>> origin/main
   }
 
   // 3. Ovládací metody
@@ -54,7 +66,11 @@ export class LoginPage {
   }
 
   async clickPasswordForgotten(): Promise<LostPasswordPage> {
+<<<<<<< HEAD
     await this.lostPasswordAnchor.click();
+=======
+    await this.passwordForgottenAnchor.click();
+>>>>>>> origin/main
     return new LostPasswordPage(this.page);
   }
 }
