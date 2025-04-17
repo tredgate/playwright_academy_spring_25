@@ -1,15 +1,18 @@
 import { type Locator, type Page } from "@playwright/test";
 import { LoginPage } from "./login_page.ts";
+import { ProjectsPage } from "./projects_page.ts";
 
 export class DashboardPage {
   private readonly page: Page;
   private readonly profileButton: Locator;
   private readonly logoutButton: Locator;
+  private readonly projectsButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.profileButton = page.locator("#user_dropdown");
     this.logoutButton = page.locator("#logout");
+    this.projectsButton = page.locator("#Projects a");
   }
 
   async clickProfile(): Promise<DashboardPage> {
@@ -23,25 +26,19 @@ export class DashboardPage {
     await this.logoutButton.click();
     return new LoginPage(this.page);
   }
+
+  async clickProjects(): Promise<ProjectsPage> {
+    await this.projectsButton.click();
+    return new ProjectsPage(this.page);
+  }
 }
-/*
-Vytvořte novou branch: exercise_assisted_pages
-Složka
-src/pages/pmtool/
-Soubor
-projects_page.ts
-Třída
-ProjectsPage
 
-
-Složka
-src/pages/pmtool/projects
-Soubory
-create_new_project_modal.ts
-project_info_page.ts
-Třídy
-CreateNewProjectModal
-ProjectInfoPage
-
-
-*/
+// Složka
+// projekt/tests/exercises
+// Soubor
+// exercise_add_project.spec.ts
+// Kroky
+// Přihlášení
+// Kliknutí na Projects
+// Vytvoření projektu (name pomocí Faker)
+// Odhlášení
