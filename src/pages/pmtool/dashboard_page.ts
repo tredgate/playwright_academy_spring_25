@@ -1,4 +1,4 @@
-import { type Locator, type Page } from "@playwright/test";
+import { test, expect, type Locator, type Page } from "@playwright/test";
 import { LoginPage } from "./login_page.ts";
 import { ProjectsPage } from "./projects_page.ts";
 
@@ -7,17 +7,22 @@ export class DashboardPage {
   private readonly profileButton: Locator;
   private readonly logoutButton: Locator;
   private readonly projectsButton: Locator;
+  private readonly notificationButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.profileButton = page.locator("#user_dropdown");
     this.logoutButton = page.locator("#logout");
     this.projectsButton = page.locator("#Projects a");
+    this.notificationButton = page.locator("#user_notifications_report");
   }
 
   async clickProfile(): Promise<DashboardPage> {
     // ! waitForTimeout je tzv. explicitní čekání - TOTO NENÍ DOBŘE, těmto čekání bychom se měli vyvarovat, protože zpomalují testy.
-    await this.page.waitForTimeout(1500);
+    //await this.page.waitForTimeout(1500);
+    // ! Implementace implicitního čekání: expect.toBeVisible() čeká na element, dokud se neobjeví na stránce
+    // ! Tímto způsobem se vyhneme explicitnímu čekání a testy budou rychlejší a spolehlivější.
+    await expect(this.notificationButton).toBeVisible();
     await this.profileButton.click();
     return this;
   }
@@ -31,14 +36,12 @@ export class DashboardPage {
     await this.projectsButton.click();
     return new ProjectsPage(this.page);
   }
-}
 
-// Složka
-// projekt/tests/exercises
-// Soubor
-// exercise_add_project.spec.ts
-// Kroky
-// Přihlášení
-// Kliknutí na Projects
-// Vytvoření projektu (name pomocí Faker)
-// Odhlášení
+  async logout(): Promise<LoginPage> {
+    await test.step("Odhlášení z Pmtool", async () => {
+      await this.clickProfile();
+      await this.clickLogout();
+    });
+    return new LoginPage(this.page);
+  }
+}
