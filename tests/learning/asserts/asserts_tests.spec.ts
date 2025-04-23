@@ -45,4 +45,49 @@ test.describe("Asserts - Testing with Playwright", () => {
       assertText
     );
   });
+
+  test("Soft Assert Test", async ({ page }) => {
+    const dashboardPage = new DashboardPage(page);
+
+    // ? Měkký assert, nezastaví test, pokud spadne
+    await expect
+      .soft(page.locator("#welcome-page-header"))
+      .toHaveText("Vítej v testovací aplikaci");
+
+    await dashboardPage
+      .clickProfile()
+      .then((dashboard) => dashboard.clickLogout());
+  });
 });
+
+test.describe("Login Page Tests", () => {
+  test("Negative Assert", async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.openPmtool();
+
+    // ? Tento implicitní wait nám slouží k ověření, že je stránka načtená před negativní kontrolou
+    await expect(page.locator("#username")).toBeVisible();
+
+    await expect(page.locator(".alert")).not.toBeVisible();
+  });
+
+  test("Page Objects Asserts", async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage
+      .openPmtool()
+      .then((login) => login.pageHeaderHasText("Login"));
+  });
+});
+/*
+Cvičení - testy na nevyplněná pole (⌛10:00)
+Vytvoř nový testovací soubor ve složce exercises: pmtool-empty-fields-tests.spec.ts
+Vytvoř nový test:
+Otevře PMTool
+Přihlásí se
+Zkontroluj:
+Viditelnost profilového tlačítka, které používáme pro odhlášení.
+Text názvu aplikace: TEG Project Management
+
+* Testy budou vytvořené v Page Objektech
+
+*/

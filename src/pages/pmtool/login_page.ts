@@ -60,6 +60,7 @@ export class LoginPage {
     return new LostPasswordPage(this.page);
   }
 
+  // ? Alternativní názvy metody: assertPageHeaderText, pageHeaderShouldHaveText
   async pageHeaderHasText(headerText: string): Promise<LoginPage> {
     await expect(this.pageHeader).toHaveText(headerText);
     return this;

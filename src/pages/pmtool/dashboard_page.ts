@@ -1,4 +1,4 @@
-import { test, expect, type Locator, type Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 import { LoginPage } from "./login_page.ts";
 import { ProjectsPage } from "./projects_page.ts";
 
@@ -7,14 +7,14 @@ export class DashboardPage {
   private readonly profileButton: Locator;
   private readonly logoutButton: Locator;
   private readonly projectsButton: Locator;
-  private readonly notificationButton: Locator;
+  private readonly appNameHeader: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.profileButton = page.locator("#user_dropdown");
     this.logoutButton = page.locator("#logout");
     this.projectsButton = page.locator("#Projects a");
-    this.notificationButton = page.locator("#user_notifications_report");
+    this.appNameHeader = page.locator(".navbar-brand");
   }
 
   async clickProfile(): Promise<DashboardPage> {
@@ -37,11 +37,13 @@ export class DashboardPage {
     return new ProjectsPage(this.page);
   }
 
-  async logout(): Promise<LoginPage> {
-    await test.step("Odhlášení z Pmtool", async () => {
-      await this.clickProfile();
-      await this.clickLogout();
-    });
-    return new LoginPage(this.page);
+  async profileButtonIsVisible(): Promise<DashboardPage> {
+    await expect(this.profileButton).toBeVisible();
+    return this;
+  }
+
+  async appHeaderHasText(appName: string): Promise<DashboardPage> {
+    await expect(this.appNameHeader).toHaveText(appName);
+    return this;
   }
 }
