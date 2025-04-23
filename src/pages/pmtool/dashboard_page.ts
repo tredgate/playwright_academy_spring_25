@@ -8,6 +8,7 @@ export class DashboardPage {
   private readonly logoutButton: Locator;
   private readonly projectsButton: Locator;
   private readonly appNameHeader: Locator;
+  private readonly notificationButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,6 +16,7 @@ export class DashboardPage {
     this.logoutButton = page.locator("#logout");
     this.projectsButton = page.locator("#Projects a");
     this.appNameHeader = page.locator(".navbar-brand");
+    this.notificationButton = page.locator("#user_notifications_report");
   }
 
   async clickProfile(): Promise<DashboardPage> {
