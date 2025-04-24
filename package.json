@@ -2,7 +2,11 @@
   "name": "playwright_academy_spring_25",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test --project=chromium",
+    "ui": "playwright test --ui",
+    "start": "playwright test --ui"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tredgate/playwright_academy_spring_25.git"
