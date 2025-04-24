@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page } from "@playwright/test";
+import { test, expect, type Locator, type Page } from "@playwright/test";
 import { DashboardPage } from "./dashboard_page.ts";
 import { LostPasswordPage } from "./lost_password_page.ts";
 
@@ -64,5 +64,15 @@ export class LoginPage {
   async pageHeaderHasText(headerText: string): Promise<LoginPage> {
     await expect(this.pageHeader).toHaveText(headerText);
     return this;
+  }
+
+  async openAndLogin(
+    username: string,
+    password: string
+  ): Promise<DashboardPage> {
+    await test.step("Otevření Pmtool a přihlášení", async () => {
+      await this.openPmtool().then((login) => login.login(username, password));
+    });
+    return new DashboardPage(this.page);
   }
 }
