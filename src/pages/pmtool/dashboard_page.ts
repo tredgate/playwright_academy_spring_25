@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page } from "@playwright/test";
+import { test, expect, type Locator, type Page } from "@playwright/test";
 import { LoginPage } from "./login_page.ts";
 import { ProjectsPage } from "./projects_page.ts";
 
@@ -21,9 +21,8 @@ export class DashboardPage {
 
   async clickProfile(): Promise<DashboardPage> {
     // ! waitForTimeout je tzv. explicitní čekání - TOTO NENÍ DOBŘE, těmto čekání bychom se měli vyvarovat, protože zpomalují testy.
-    //await this.page.waitForTimeout(1500);
-    // ! Implementace implicitního čekání: expect.toBeVisible() čeká na element, dokud se neobjeví na stránce
-    // ! Tímto způsobem se vyhneme explicitnímu čekání a testy budou rychlejší a spolehlivější.
+    // await this.page.waitForTimeout(1500);
+    // ? Namísto explicitního (natvrdo) čekání, čekáme na zobrazení prvku (implicitní čekání). Implicitní čekání jsou stabilnější a rychlejší, než explicitní.
     await expect(this.notificationButton).toBeVisible();
     await this.profileButton.click();
     return this;
@@ -47,5 +46,13 @@ export class DashboardPage {
   async appHeaderHasText(appName: string): Promise<DashboardPage> {
     await expect(this.appNameHeader).toHaveText(appName);
     return this;
+  }
+
+  async logout(): Promise<LoginPage> {
+    await test.step("Odhlášení z Pmtool", async () => {
+      await this.clickProfile().then((dashboard) => dashboard.clickLogout());
+    });
+
+    return new LoginPage(this.page);
   }
 }
