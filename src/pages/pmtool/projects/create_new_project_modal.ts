@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { ProjectTasksPage } from "./project_tasks_page.ts";
+import { ProjectsPage } from "../projects_page.ts";
 
 export class CreateNewProjectModal {
   private readonly page: Page;
@@ -21,6 +22,7 @@ export class CreateNewProjectModal {
   readonly closeButton: Locator;
   readonly nameValidationDiv: Locator;
   readonly alertMessageDiv: Locator;
+  readonly uploadFilesList: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -58,6 +60,9 @@ export class CreateNewProjectModal {
     this.closeButton = page.locator(".btn-close");
     this.nameValidationDiv = page.locator('//div[@data-testid="Name"]/label');
     this.alertMessageDiv = page.locator(".alert-danger");
+    this.uploadFilesList = page.locator(
+      '//div[contains(@id, "uploadifive_attachments_list")]'
+    );
   }
 
   async typeName(nameValue: string): Promise<CreateNewProjectModal> {
@@ -68,5 +73,32 @@ export class CreateNewProjectModal {
   async clickSave(): Promise<ProjectTasksPage> {
     await this.saveButton.click();
     return new ProjectTasksPage(this.page);
+  }
+
+  async triggerNameValidation(): Promise<CreateNewProjectModal> {
+    // ? Ověření, že je pole pro název prázdné
+    await this.nameInput.clear();
+    // ? Po kliknutí na tlačítko "Uložit" by se měla zobrazit validační hláška
+    await this.saveButton.click();
+    return this;
+  }
+
+  async triggerAlertMessage(): Promise<CreateNewProjectModal> {
+    // ? Pro zobrazení validační hlášky je potřeba kliknout na tlačítko "Uložit" bez vyplnění povinných polí, my na to využijeme už existující metodu triggerNameValidation. Mohlo by se zdát, že jde o duplicitu, ale z pohledu psaní testů nám tato metoda může zjednodušit hledání této metody v testech.
+    // ? V testech pak můžeme použít triggerAlertMessage() a nemusíme se starat o to, co přesně se děje v této metodě.
+    return await this.triggerNameValidation();
+  }
+
+  async uploadFile(filePath: string): Promise<CreateNewProjectModal> {
+    const fileChooser = this.page.waitForEvent("filechooser");
+    await this.attachmentsButton.click();
+    const fileInput = await fileChooser;
+    await fileInput.setFiles(filePath);
+    return this;
+  }
+
+  async clickClose(): Promise<ProjectsPage> {
+    await this.closeButton.click();
+    return new ProjectsPage(this.page);
   }
 }
