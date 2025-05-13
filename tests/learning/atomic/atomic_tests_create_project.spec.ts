@@ -1,21 +1,25 @@
+//atomic_tests_create_project.spec.ts
+//learning/atomic
 import { expect, test } from "@playwright/test";
 import { LoginPage } from "../../../src/pages/pmtool/login_page.ts";
 import { CreateNewProjectModal } from "../../../src/pages/pmtool/projects/create_new_project_modal.ts";
 import path from "path";
 
-test.describe("Pmtool Atomic Tests - Create Project Modal", async () => {
+test.describe("Pmtool Atomic Tests - Create Project Modal", () => {
   test.beforeEach(async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage
       .openPmtool()
       .then((login) => login.login("pw_skoleni", "TEG2023"))
-      .then((login) => login.clickProjects())
-      .then((login) => login.clickAddProject());
+      .then((dashboard) => dashboard.clickProjects())
+      .then((projects) => projects.clickAddProject());
   });
 
-  test("Modal Structure Tests", async ({ page }) => {
+  test("Form Structure Tests", async ({ page }) => {
+    // ? Vytváříme PO před stepem, abychom jej mohli využít v každém test.step a nemuseli jej vytvářet stále dokola.
     const addProjectModal = new CreateNewProjectModal(page);
-    await test.step("Title Header Tests", async () => {
+
+    await test.step("Title Header Test", async () => {
       await expect.soft(addProjectModal.titleHeader).toBeVisible();
       await expect.soft(addProjectModal.titleHeader).toHaveText("Project Info");
     });
@@ -27,10 +31,9 @@ test.describe("Pmtool Atomic Tests - Create Project Modal", async () => {
 
     await test.step("Priority Select Tests", async () => {
       await expect.soft(addProjectModal.prioritySelect).toBeVisible();
-      // ? Hvězdička v toHaveTest() je zde proto, že v rámci tohoto labelu je pole povinné a je označeno hvězdičkou
+      await expect.soft(addProjectModal.priorityLabel).toBeVisible();
       await expect.soft(addProjectModal.priorityLabel).toHaveText("*Priority");
       await expect.soft(addProjectModal.prioritySelect).toBeEnabled();
-
       // ? Ověření, že má select všechny options
       // ? Výběr options můžou potenciálně způsobit ukončení testů v případě, že option nebude existovat. Je dobré zvážit oddělení testů pro selecty do samostatných testů
       await addProjectModal.prioritySelect.selectOption({ label: "Urgent" }); // 34 = Urgent
@@ -136,13 +139,16 @@ test.describe("Pmtool Atomic Tests - Create Project Modal", async () => {
 
   test("Click Save Button Test", async ({ page }) => {
     const addProjectModal = new CreateNewProjectModal(page);
-    await addProjectModal.clickSave();
-    // TODO: doplnit ověření, že se modal zavřel a že se otevřela stránka s úkoly
+    await addProjectModal
+      .typeName("testProject")
+      .then((createProject) => createProject.clickSave())
+      .then((tasks) => tasks.headerHasText("Tasks"));
   });
 
   test("Click Close Button Test", async ({ page }) => {
     const addProjectModal = new CreateNewProjectModal(page);
-    await addProjectModal.clickClose();
-    // TODO: doplnit ověření, že se modal zavřel a že se otevřela stránka s projekty
+    await addProjectModal
+      .clickClose()
+      .then((projects) => projects.headerHasText("Projects"));
   });
 });
