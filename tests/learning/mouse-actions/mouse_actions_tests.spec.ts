@@ -5,26 +5,13 @@ test.describe("Mouse Actions Tests", () => {
     await page.goto("https://tredgate.com/webtrain/web-actions.html");
   });
 
-<<<<<<< HEAD
-  test("Mouse Actions", async ({ page }) => {
-=======
   test("Hover Test", async ({ page }) => {
->>>>>>> api_testing
     await page.locator("#hover-box").hover();
     // ? hover-message se zobrazí až po najetí myši na #hover-box
     await expect(page.locator("[data-testid='hover-message']")).toBeVisible();
   });
 
   test("Drag and Drop", async ({ page }) => {
-<<<<<<< HEAD
-    // Identifikace a uložení prvků pro přetahování do const
-    const draggable = page.locator("#drag1");
-    const dropzone = page.locator("#drop1");
-
-    // ? ověření, že cíl je v zorném poli, pokud ne, zascrolluje se na něj
-    await dropzone.scrollIntoViewIfNeeded();
-    await draggable.dragTo(dropzone);
-=======
     const draggable = page.locator("#drag1");
     const dropzone = page.locator("#drop1");
 
@@ -33,7 +20,6 @@ test.describe("Mouse Actions Tests", () => {
 
     await draggable.dragTo(dropzone);
 
->>>>>>> api_testing
     await expect(page.locator("#dropped-message")).toBeVisible();
   });
 
