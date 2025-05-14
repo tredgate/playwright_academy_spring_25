@@ -140,3 +140,9 @@ dist
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Mac folder files
+.DS_Store
+
+# VS Code directories
+/.vscode/
