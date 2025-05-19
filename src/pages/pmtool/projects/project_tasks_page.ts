@@ -14,7 +14,7 @@ export class ProjectTasksPage {
     this.profileButton = page.locator("#user_dropdown");
     this.logoutButton = page.locator("#logout");
     this.pageHeader = page.locator("h3.page-title");
-    this.projectInfoButton = page.locator(".navbar-header .navbar-brand");
+    this.projectInfoButton = page.locator(".navbar-header a.navbar-brand");
   }
 
   async headerHasText(headerText: string): Promise<ProjectTasksPage> {

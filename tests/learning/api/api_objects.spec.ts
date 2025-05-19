@@ -1,33 +1,22 @@
 import { expect, test } from "@playwright/test";
 import { faker } from "@faker-js/faker";
-import { UserApi } from "../../../src/api/user_api.ts";
+import { UserApi } from "../../../src/api/tegb/user_api.ts";
 
-test.describe("API Objects", () => {
-  test("Register and Login via API Objects", async ({ request }) => {
-    // * Příprava testovacích dat (pomocí faker)
-    const username = faker.internet.username();
-    const password = faker.internet.password();
-    const email = faker.internet.email();
+test("Register and Login via API Objects", async ({ request }) => {
+  const email = faker.internet.exampleEmail();
+  const username = faker.internet.username();
+  const password = faker.internet.password();
 
-    // * Vytvoření instance UserApi
-    const api = new UserApi(request);
-    // * Registrace uživatele
-    const registerResponse = await api.registerUser(username, password, email);
-    // * Přihlášení uživatele
-    const loginResponse = await api.loginUser(username, password);
+  const api = new UserApi(request);
 
-    // * Testy registrace a přihlášení
-    // * I testy mohou být přesunuty do API objektů
-    expect(registerResponse.status()).toBe(201);
-    expect(loginResponse.status()).toBe(201);
+  const registerResponse = await api.registerUser(username, password, email);
+  const loginResponse = await api.successLogin(username, password);
 
-    const registerResponseBody = await registerResponse.json();
-    const registerUserId = registerResponseBody.userId;
-    expect(registerUserId).toBeDefined();
+  // ? Testy mohou být přesunuty do API objektů
 
-    const loginResponseBody = await loginResponse.json();
-    const accessToken = loginResponseBody.access_token;
-    expect(accessToken).toBeDefined();
-    expect(typeof accessToken).toBe("string");
-  });
+  const registerResponseBody = await registerResponse.json();
+  expect(registerResponseBody.username).toBeDefined();
+
+  const loginResponseBody = await loginResponse.json();
+  expect(loginResponseBody.access_token).toBeDefined();
 });
