@@ -1,0 +1,37 @@
+[
+  {
+    "name_prefix": "new_high_today_",
+    "status": "New",
+    "priority": "High",
+    "description": "New High Priority Project Started Today",
+    "start_date": "today"
+  },
+  {
+    "name_prefix": "waiting_urgent_yesterday_",
+    "status": "Waiting",
+    "priority": "Urgent",
+    "description": "Waiting Urgent Project Started Yesterday",
+    "start_date": "yesterday"
+  },
+  {
+    "name_prefix": "open_high_tomorrow_",
+    "status": "Open",
+    "priority": "High",
+    "description": "Open High Priority Project Starting Tomorrow",
+    "start_date": "tomorrow"
+  },
+  {
+    "name_prefix": "closed_urgent_today_",
+    "status": "Closed",
+    "priority": "Urgent",
+    "description": "Closed Urgent Project Started Today",
+    "start_date": "today"
+  },
+  {
+    "name_prefix": "cancelled_High_yesterday_",
+    "status": "Canceled",
+    "priority": "High",
+    "description": "Canceled High Priority Project Started Yesterday",
+    "start_date": "yesterday"
+  }
+]

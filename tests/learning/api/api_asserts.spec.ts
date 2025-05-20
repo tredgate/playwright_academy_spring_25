@@ -43,28 +43,3 @@ test.describe("API Asserts", () => {
     expect(typeof responseBody.id).toBe("number");
   });
 });
-
-/*
-Vytvořte nový test, který otestuje request:
-Složka: tests/exercise
-Test: api_request_asserts_exercise.spec.ts
-Url: https://tegb-backend-877a0b063d29.herokuapp.com/eshop/4
-
-Zkontrolujte:
-Body obsahuje property:
-userId
-Typ properties:
-active: number
-Hodnoty:
-username == petrfifka
-
-Body:
-{
-    "userId": 4,
-    "username": "petrfifka",
-    "email": "petr.fifka@tredgate.cz",
-    "createdAt": "2023-10-24",
-    "updatedAt": null,
-    "active": 1
-}
-*/

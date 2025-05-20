@@ -2,41 +2,32 @@ import { expect, test } from "@playwright/test";
 
 test.describe("Frontend with API Tests", () => {
   test("Login API Check", async ({ page }) => {
-    await page.goto("http://localhost:3001/");
+    await page.goto("http://localhost:3001");
     await page.locator('[data-testid="username"]').fill("fifka_petr");
     await page.locator('[data-testid="password"]').fill("Tredgate2023#");
-    const loginResponsePromise = page.waitForResponse(/\/auth\/login/); // ? Využití Regex pro zachycení URL, která obsahuje /auth/login
-    await page.locator('button[data-testid="log_in"]').click();
-    await loginResponsePromise;
-
-    await page.locator('[data-testid="logout_button"]').click();
-  });
-
-  test("Test Intercepted Login API ", async ({ page }) => {
-    await page.goto("http://localhost:3001/");
-    await page.locator('[data-testid="username"]').fill("fifka_petr");
-    await page.locator('[data-testid="password"]').fill("Tredgate2023#");
-    const loginResponsePromise = page.waitForResponse(/\/auth\/login/); // ? Využití Regex pro zachycení URL, která obsahuje /auth/login
-    await page.locator('button[data-testid="log_in"]').click();
+    // ? Spouštíme listenera (posluchač) na doručení response api, která obsahuje cestu: /auth/login
+    const loginResponsePromise = page.waitForResponse(/\/auth\/login/);
+    // ? Klikáme na log in tlačítko, čímž se z frontendu pošle request na API server
+    await page.locator('[data-testid="log_in"]').click();
+    // ? Čekáme až se doručí response pro login
     const loginResponse = await loginResponsePromise;
-    const loginApiRequest = loginResponse.request();
+    await page.locator('[data-testid="logout_button"]').click();
 
-    // ? Kontrola requestu, jeho url a metody
-    const requestUrl = loginApiRequest.url();
-    expect(requestUrl).toContain("/auth/login");
-    const requestMethod = loginApiRequest.method();
-    expect(requestMethod).toBe("POST");
+    const loginRequest = loginResponse.request();
 
-    // ? Kontrola requestu, jeho body
-    const requestBody = await loginApiRequest.postDataJSON();
-    expect(requestBody.username).toBe("fifka_petr");
-    expect(requestBody.password).toBe("Tredgate2023#");
+    // * Testování request části API
+    expect(loginRequest.url()).toBe("http://localhost:3000/auth/login");
+    expect(loginRequest.method()).toBe("POST");
 
-    // ? Kontrola response, statusu a body
-    const responseStatus = loginResponse.status();
-    expect(responseStatus).toBe(201);
-    const responseBody = await loginResponse.json();
-    expect(responseBody.access_token).toBeDefined();
-    expect(typeof responseBody.access_token).toBe("string");
+    const loginRequestBody = await loginRequest.postDataJSON();
+    expect(loginRequestBody.username).toBe("fifka_petr");
+    expect(loginRequestBody.password).toBe("Tredgate2023#");
+
+    // * Testování response části API
+    expect(loginResponse.status()).toBe(201);
+
+    const loginResponseBody = await loginResponse.json();
+    expect(loginResponseBody.access_token).toBeDefined();
+    expect(typeof loginResponseBody.access_token).toBe("string");
   });
 });

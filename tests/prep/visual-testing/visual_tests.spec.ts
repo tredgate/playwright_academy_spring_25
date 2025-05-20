@@ -7,7 +7,7 @@ test.describe("Visual Tests", () => {
     await expect(page).toHaveScreenshot("simple_test.png");
   });
 
-  test("Failing Visual Test", async ({ page }) => {
+  test.skip("Failing Visual Test", async ({ page }) => {
     await page.goto("https://tredgate.com/webtrain/web-actions.html");
     // ? Tento krok přidáme až po vygenerování snapshotu, abychom nasimulovali pád vizuálního testu
     await page.locator('[data-testid="double-click-box"]').dblclick();
