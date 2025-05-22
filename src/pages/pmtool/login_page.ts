@@ -11,6 +11,7 @@ export class LoginPage {
   private readonly loginButton: Locator;
   private readonly passwordForgottenAnchor: Locator;
   private readonly pageHeader: Locator;
+  private readonly loginForm: Locator;
 
   // 2. Constructor v kterém nastavíme jednotlivé lokátory
   constructor(page: Page) {
@@ -20,6 +21,7 @@ export class LoginPage {
     this.loginButton = page.locator(".btn");
     this.passwordForgottenAnchor = page.locator("#forget_password");
     this.pageHeader = page.locator("h3.form-title");
+    this.loginForm = page.locator(".content-login");
   }
 
   // 3. Ovládací metody
@@ -74,5 +76,10 @@ export class LoginPage {
       await this.openPmtool().then((login) => login.login(username, password));
     });
     return new DashboardPage(this.page);
+  }
+
+  async loginFormVisualCheck(): Promise<LoginPage> {
+    await expect(this.loginForm).toHaveScreenshot("login_form.png");
+    return this;
   }
 }
