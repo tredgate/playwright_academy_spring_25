@@ -7,7 +7,7 @@ test.describe(
     tag: "@github-actions",
   },
   () => {
-    const username = process.env.PMTOOL_USERNAM as string;
+    const username = process.env.PMTOOL_USERNAME as string;
     const password = process.env.PMTOOL_PASSWORD as string;
 
     test("Pmtool Login", async ({ page }) => {
