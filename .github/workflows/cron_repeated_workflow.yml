@@ -1,9 +1,8 @@
-name: Playwright Tests
+#cron_repeated_workflow.yml
+name: Time-based Playwright Tests
 on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+  schedule:
+    - cron: "*/15 * * * *" # Běží každých 15 minut
 jobs:
   test:
     timeout-minutes: 60
