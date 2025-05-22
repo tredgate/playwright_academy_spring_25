@@ -1,6 +1,5 @@
 import { test } from "@playwright/test";
 import { LoginPage } from "../../../src/pages/pmtool/login_page.ts";
-import { da } from "@faker-js/faker/.";
 
 test.describe(
   "GitHub Actions Tests",
