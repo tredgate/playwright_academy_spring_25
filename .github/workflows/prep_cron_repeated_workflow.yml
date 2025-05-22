@@ -1,4 +1,4 @@
-name: Time-based Playwright Tests
+name: Preparation Time-based Playwright Tests
 on:
   schedule:
     - cron: "*/15 * * * *"
