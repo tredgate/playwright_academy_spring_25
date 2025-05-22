@@ -62,3 +62,12 @@ test.describe("Visual Tests", () => {
     await expect(phoneInput).toHaveScreenshot("input_test.png");
   });
 });
+/*
+Cvičení - zařazení do page objektů (⌛10:00)
+Vytvořte nový vizuální test, který bude umístěný v metodě page objektu. Otestujte vizuálně formulář na přihlašovací stránce Pmtoolu.
+
+Page Object: src/pages/pmtool/login_page.ts 
+Lokátor formuláře: .content-login
+
+Do metody nemusíte vkládat žádné parametry.
+*/
