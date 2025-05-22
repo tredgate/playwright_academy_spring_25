@@ -1,4 +1,3 @@
-// api_reusing_data.spec.ts
 import { expect, test } from "@playwright/test";
 import { faker } from "@faker-js/faker";
 

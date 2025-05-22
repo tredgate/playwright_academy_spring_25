@@ -1,4 +1,3 @@
-//api_with_frontend_tests.spec.ts
 import { expect, test } from "@playwright/test";
 
 test.describe("Frontend with API Tests", () => {

@@ -1,5 +1,3 @@
-// using_api_requests_in_frontend.spec.ts;
-
 import { expect, test } from "@playwright/test";
 import { faker } from "@faker-js/faker";
 

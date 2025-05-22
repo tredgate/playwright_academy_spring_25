@@ -49,4 +49,15 @@ test.describe("Forms Actions", () => {
     // ? čekání tu máme, abychom v logu viděli, že se soubor vybere
     await page.waitForTimeout(2000);
   });
+
+  test("Slider - range", async ({ page }) => {
+    // ? Nastavení hodnoty slideru na 5
+    await page.locator("#experience").fill("5");
+
+    // ? Nastavení hodnoty slideru na 10
+    await page.locator("#experience").fill("10");
+
+    // ? Nastavení hodnoty slideru na 1
+    await page.locator("#experience").fill("1");
+  });
 });

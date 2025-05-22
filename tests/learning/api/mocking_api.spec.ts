@@ -1,5 +1,3 @@
-// mocking_api.spec.ts
-
 import { test, expect } from "@playwright/test";
 
 const mockJson = [

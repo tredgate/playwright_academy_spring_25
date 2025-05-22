@@ -1,6 +1,4 @@
 import { type Locator, type Page, expect } from "@playwright/test";
-// project_info_page.ts
-// src/pages/projects
 
 export class ProjectInfoPage {
   private readonly page: Page;

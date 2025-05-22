@@ -1,6 +1,3 @@
-// ddt_tests.spec.ts
-// tests/learning/ddt
-
 import { test } from "@playwright/test";
 import newProjectData from "../../../src/assets/ddt/new_project_data.json";
 import { faker } from "@faker-js/faker";
